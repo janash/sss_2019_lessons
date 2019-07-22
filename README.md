@@ -1,6 +1,4 @@
-# FIXME Lesson title
-
-[![Create a Slack Account with us](https://img.shields.io/badge/Create_Slack_Account-The_Carpentries-071159.svg)](https://swc-slack-invite.herokuapp.com/)
+# 2019 Software Summer School Lessons
 
 This is a MolSSI-ified software carpentry template to be used for development of all MolSSI education lessons.
 
