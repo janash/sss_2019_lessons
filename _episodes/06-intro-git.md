@@ -357,7 +357,6 @@ $ git remote -v
 ~~~
 {: .language-bash}
 
-
 You should see no output. Now, follow the instructions on GitHub under "...or push an existing repository from the command line"
 ~~~
 $ git remote add origin URL_OF_YOUR_REPOSITORY
@@ -368,6 +367,107 @@ $ git push -u origin master
 The first command adds a remote named `origin` and sets the URL to our repository. The second command pushes our repo to where we have set as origin. The word `master` means we are pushing the `master` branch.
 
 Now if you refresh the GitHub webpage you should be able to see all of the new files you added to the repository.
+
+## Ignoring files
+## Ignoring Files
+
+Sometimes while you work on a project, you may end up creating some temporary files.
+For example, if your text editor is Emacs, you may end up with lots of files called `<filename>~`.
+By default, Git tracks all files, including these.
+This tends to be annoying, since it means that any time you do "git status", all of these unimportant files show up.
+
+We are now going to find out how to tell Git to ignore these files, so that it doesn't keep telling us about them ever time we do "git status".
+Even if you aren't working with Emacs, someone else working on your project might, so let's do the courtesy of telling Git not to track these temporary files.
+First, lets ensure that we have a few dummy files:
+
+~~~
+$ touch testing.txt~
+$ touch README.md~
+$ ls -l
+~~~
+
+Now check what Git says about these files:
+
+~~~
+$ git status
+~~~
+{: .bash}
+
+~~~
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	README.md~
+	testing.txt~
+
+nothing added to commit but untracked files present (use "git add" to track)
+~~~
+{: .output}
+
+You can tell github what to ignore by using the `.gitignore` file. Create a file called `.gitignore` and add the following
+
+~~~
+# emacs
+*~
+~~~
+
+Now do "git status" again. Notice that the files we added are no longer recognized by git.
+
+~~~
+$ git status
+~~~
+{: .bash}
+
+~~~
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   .gitignore
+
+no changes added to commit (use "git add" and/or "git commit -a")
+~~~
+{: .output}
+
+We want these additions to .gitignore to become a permanent part of the repository, so do
+
+~~~
+$ git add .gitignore
+$ git commit -m "Ignores Emacs temporary files and data directory"
+$ git push
+~~~
+{: .bash}
+
+One nice feature of .gitignore is that prevents us from accidentally adding a file that shouldn't be part of the repository.
+For example:
+
+~~~
+$ git add README.md~
+~~~
+{: .bash}
+
+~~~
+The following paths are ignored by one of your .gitignore files:
+README.md~
+Use -f if you really want to add them.
+~~~
+{: .output}
+
+It is possible to override this with the "-f" option for git add.
+
+When you initialize repository on GitHub, you can create a `.gitignore` of a specified language. You can also find a set of .gitignores from github [here](https://github.com/github/gitignore).
+
+Here is the one for [Python](https://github.com/github/gitignore/blob/master/Python.gitignore).
+
+{: .bash}
+
+
 
 {% include links.md %}
 [GitHub]: https://github.com
