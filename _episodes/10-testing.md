@@ -326,6 +326,12 @@ def test_foo(x, y):
 This will run the test with the arguments set to x=0/y=2, x=1/y=2, x=0/y=3,
 and x=1/y=3 exhausting parameters in the order of the decorators.
 
+## Testing Documentations
+
+~~~
+$ pytest -v --doctest-modules geometry_analysis
+~~~
+
 ## Testing from QCArchive
 
 ~~~

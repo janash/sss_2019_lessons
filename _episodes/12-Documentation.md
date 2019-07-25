@@ -141,7 +141,7 @@ Remove the older files and rebuild.
 
 ## Putting on Read The Docs
 
-To put our auto generated documentation on Read The Docs, we will need a configuration file. In order for the RTD site to build your auto documentation, it has to build and import your module. Since we have dependencies, we will need to provide an environment file and a configuration file.
+To put our auto generated documentation on Read The Docs, we will need a configuration file. In order for the RTD site to build your auto documentation, it has to build and import your module. Since we have dependencies, we will need gitto provide an environment file and a configuration file.
 
 Copy the environment file we use for testing.
 
