@@ -467,8 +467,6 @@ Here is the one for [Python](https://github.com/github/gitignore/blob/master/Pyt
 
 {: .bash}
 
-
-
 {% include links.md %}
 [GitHub]: https://github.com
 [GitLab]: https://gitlab.com/

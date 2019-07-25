@@ -163,7 +163,7 @@ $ pip install yapf
 In your terminal, run yapf with the following command -
 
 ~~~
-$ yapf -i molssi_devops/molssi_math.py
+$ yapf -i geometry.py
 ~~~
 {: .language-bash}
 
