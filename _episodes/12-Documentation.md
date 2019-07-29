@@ -26,7 +26,7 @@ The documentation typically involves several components:
  - How to use the software (through the API or through inputs)
  - Some examples
  
- ## Developer Documentation
+## Developer Documentation
 Another aspect of documentation is code documentation. This is very
 important for further development and maintenance, including by yourself in the
 future. This typically includes documenting various internal files, functions,
