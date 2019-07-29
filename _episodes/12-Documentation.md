@@ -239,7 +239,8 @@ $ make html
 Now, you should see the doc string for the `calculate_distance` function pulled out as documentation.
 
 > ## Exercise
-> Add documentation for the `calclate_angle` function.
+> Add documentation for the `calculate_angle` function.
+>
 >> ## Answer 
 >> ~~~
 >> .. autosummary::
@@ -248,7 +249,7 @@ Now, you should see the doc string for the `calculate_distance` function pulled 
 >>     geometry_analysis.calculate_angle
 >> ~~~
 > {: .solution}
-{: .exercise}
+{: .challenge}
 
 ## Hosting your documentation
 
