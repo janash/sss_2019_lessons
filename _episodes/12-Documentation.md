@@ -25,7 +25,9 @@ The documentation typically involves several components:
  - How to compile/build/test/install
  - How to use the software (through the API or through inputs)
  - Some examples
- - Another aspect of documentation is code documentation. This is very
+ 
+ ## Developer Documentation
+Another aspect of documentation is code documentation. This is very
 important for further development and maintenance, including by yourself in the
 future. This typically includes documenting various internal files, functions,
 and classes; what pieces of code do; and most importantly, the reasoning behind
@@ -46,43 +48,81 @@ confusing users.
 
 - Ok to document in README for simple modules
 
-## RTD and Sphinx for complex modules
+## Sphinx for complex modules
 
-When you want to improve your documentation strategies use Sphinx and readthedocs.
+When you want to improve your documentation strategies for Python packages, use [Sphinx](https://www.sphinx-doc.org/en/master/). Sphinx is a tool for creating documentation, and was originally created for documentation of the Python programming language. Many projects you are familiary with use Sphinx for documentation - including numpy, matplotlib, and pytest. To see a list of project that use Sphinx, click [here](https://www.sphinx-doc.org/en/master/examples.html).
+
+CookieCutter has already set up files which we need to get started with Sphinx.
+
+## Using Sphinx to build documentation
+
+To use Sphinx to document your modules, you will first need to install Sphinx. This command installs Sphinx, and the Sphinx Read The Docs theme.
 
 ~~~
 $ conda install sphinx sphinx_rtd_theme 
 ~~~
 {: .language-bash}
 
+The files which CookieCutter has set up for Sphinx are in the `docs` folder. Navigate to that directory.
+
 ~~~
 $ cd docs
 ~~~
 {: .langauge-bash}
+
+Next, look at the files in the directory
+
+~~~
+$ ls
+~~~
+{: .bash}
+
+~~~
+Makefile   README.md  _static    _templates conf.py    index.rst  make.bat
+~~~
+{: .output}
+
+Sphinx builds documenation from reStructred text files. We have one restructured text file here (`index.rst`). When you build your documentation, this will be the index, or main page of your documentation.
+
+To build the default copy of your documentation, type
 
 ~~~
 $ make html
 ~~~
 {: .language-bash}
 
-Look at files in `_build/html`.
+This command tells Sphinx to generate your documentation. With this command, we are building HTML files from the reStructured text file which can be put online. The HTML files Sphinx has built are in the `_build` directory (this is set in your `conf.py` file.)
 
-These html pages are built from rst files. Look at and edit `index.rst`. Add a description at the top, save, and view the html.
+Look at files in `_build/html`. You can open these files in your browser.
 
-~~~
-This module contains a molecule class. You initialize the molecule with
-names and coordinates, and a bond list is built based on distance
-between atoms.
-~~~
+These html pages are built from rst files. 
+
+Add a description to your `index.rst`. 
 
 ~~~
-mkdir usage
-cd usage
+This module has a Molecule object and provides some manipulation functions.
+~~~
+
+Next, clean your previous build and rebuild your pages.
+
+~~~
+$ make clean
+$ make html
+~~~
+{: .language-bash}
+
+Refresh the page in your browser to see the page with the description.
+
+You can also add additional pages. For example, you might want to include a 'Quickstart Guide' to running your program. Create this file and fill in some contents.
+
+~~~
 touch quickstart.rst
 ~~~
 {: .language-bash}
 
-Contents of quickstart.rst
+
+Add some content to quickstart.rst
+
 ~~~
 Quickstart Guide
 =============================
@@ -100,57 +140,154 @@ Subheader
 Sample subheader
 ~~~
 
-Add this page to `index.rst`.
+To get this page to be visible from your index file, we will need to add it to the table of contents. There is a section in your `index.rst` called `toctree`. We will add this new page below.
 
 ~~~
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
 
+   quickstart
 ~~~
 
-To generate the module index with documentation.
+Now, when you generate documentation, there should be a link to this page. Note that you add the __file name__ in the TOC Tree, but the title of the page ('Quickstart Guide' is what shows up in the TOC tree)
+
+To generate your documentation with the modules documented from your docstrings, we will use Sphinx autodoc. Open your `conf.py` file and find the `extensions` section.
+
+Add the following
 
 ~~~
-sphinx-apidoc -o source/ ../<package>
-~~~
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.napoleon',
+]
 
-Next,
-
+autosummary_generate = True
 ~~~
-$ make html
-~~~
+{: .language-python}
 
-Look at your html pages. We see that tests have been documented. We probably do not want this. The command for apidoc is
+We've added a few extensions here which will allow us to pull doc strings from our Python modules (`sphinx.ext.autosummary`, `sphinx.ext.autodoc`), and another which we use because our docstrings are `NumPy` style (`sphinx.ext.napoleon`).
 
-~~~
-sphinx-apidoc [OPTIONS] -o <OUTPUT_PATH> <MODULE_PATH> [EXCLUDE_PATTERN, …]
-~~~
-
-We can exclude tests by
+Next, we add a page for documenting our package API.
 
 ~~~
-$ sphinx-apidoc -o source/ ../geometry_analysis ../geometry_analysis/*test*
+$ touch api.rst
 ~~~
 {: .language-bash}
 
-Our autodocumentation still doesn't look the way we want. We are using numpy style docstrings, but Sphinx usually works with restructured text. Fix this by adding the following to your `conf.py` file.
+In the api.rst, add documentation for the `calculate_distance` function.
 
 ~~~
-extensions = ['sphinx.ext.napoleon']
+API Documentation
+=================
+
+Data for distances
+
+.. autosummary::
+    :toctree: autosummary
+
+    geometry_analysis.calculate_distance
 ~~~
 
-Remove the older files and rebuild.
+Next, add the `api` page to your TOCTree
 
-## Putting on Read The Docs
+~~~
+.. geometry_analysis documentation master file, created by
+   sphinx-quickstart on Thu Mar 15 13:55:56 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
-To put our auto generated documentation on Read The Docs, we will need a configuration file. In order for the RTD site to build your auto documentation, it has to build and import your module. Since we have dependencies, we will need gitto provide an environment file and a configuration file.
+Overview
+=========================================================
 
-Copy the environment file we use for testing.
+This module has a Molecule object and provides some manipulation.
+
+Available techniques:
+
+ - distance
+ - *bonds*
+
+A link to `Google <www.google.com>`_.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   quickstart
+   api
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+~~~
+
+Next, rebuild your documentation. In the `docs` folder
+
+~~~
+$ make clean
+$ make html
+~~~
+{: .language-bash}
+
+Now, you should see the doc string for the `calculate_distance` function pulled out as documentation.
+
+> ## Exercise
+> Add documentation for the `calclate_angle` function.
+>> ## Answer 
+>> ~~~
+>> .. autosummary::
+>>     :toctree: autosummary
+>> 
+>>     geometry_analysis.calculate_angle
+>> ~~~
+> {: .solution}
+{: .exercise}
+
+## Hosting your documentation
+
+### Read The Docs
+We recommend hosing your  documentation on [Read The Docs](https://readthedocs.org/). With this service, you can enable the building of your documentation every time you push to your repository.
+
+Go to the [Read the Docs](https://readthedocs.org/) website. Log in with your GitHub username and hook the repository to read the docs. Push to the repository, or trigger a build on the site. You should see you documentation. However, you will not see your docstring information.
+
+#### Using autodoc and autosummary on RTD
+If you would like to use `autodoc` on Read the Docs, you will need a configuration file and an environment file specifically for documentation. In order for the RTD site to build your auto documentation, it has to build and import your module. Since we have dependencies, we will need provide an environment file and a configuration file.
+
+Copy the environment file we use for testing. From your `docs` folder, type
 
 ~~~
 $ cp ../devtools/conda-envs/test_env.yaml doc_env.yaml
 ~~~
 {: .language-bash}
 
-Remove QCArchive because we only use it for testing.
+Edit the `doc_env.yaml` file to only have the packages we need for installing and using the package.
+
+Contents of `doc_env.yaml`
+
+~~~
+name: documentation
+channels:
+dependencies:
+    # Base depends
+  - python
+  - pip
+
+  # Dependencies
+  - numpy
+
+    # Pip-only installs
+  #- pip:
+  #  - codecov
+~~~
+
+Next, we will create the configuration file for Read the Docs.
 
 ~~~
 cd ../
@@ -174,9 +311,12 @@ python:
       path: .
 
 conda:
-  environment: doc_env.yaml
+  environment: docs/doc_env.yaml
 ~~~
 
+Commit to these changes and push to your repository. You should now see your documentation strings.
+
+[Example repo](https://molssi-sss-2019-ga-example.readthedocs.io/en/latest/)
 
 
 
