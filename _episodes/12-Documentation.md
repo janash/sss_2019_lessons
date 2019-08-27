@@ -140,7 +140,7 @@ Subheader
 Sample subheader
 ~~~
 
-To get this page to be visible from your index file, we will need to add it to the table of contents. There is a section in your `index.rst` called `toctree`. We will add this new page below.
+To get this page to be visible from your index file, we will need to add it to the table of contents (TOC). There is a section in your `index.rst` called `toctree`. We will add this new page below.
 
 ~~~
 .. toctree::
@@ -168,9 +168,9 @@ autosummary_generate = True
 ~~~
 {: .language-python}
 
-We've added a few extensions here which will allow us to pull doc strings from our Python modules (`sphinx.ext.autosummary`, `sphinx.ext.autodoc`), and another which we use because our docstrings are `NumPy` style (`sphinx.ext.napoleon`).
+We've added a few extensions here which will allow us to pull doc strings from our Python modules (`sphinx.ext.autosummary`, `sphinx.ext.autodoc`), and another which we use because our docstrings are `NumPy` style (`sphinx.ext.napoleon`). Next, we have added the line `autosummary_generate = True` to allow us to pull auto summaries from our modules and functions.
 
-Next, we add a page for documenting our package API.
+Next, we add a page for documenting our package API which will use `autodoc` and `autosummary` from Sphinx.
 
 ~~~
 $ touch api.rst
