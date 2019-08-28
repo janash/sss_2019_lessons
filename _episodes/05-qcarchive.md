@@ -1,14 +1,18 @@
 ---
-title: "QCArchive"
+title: "Extending Geometry Analysis"
 teaching: 40
 exercises: 20
 questions:
-- "What are the differences between numpy arrays and lists?"
+- ""
 objectives:
-- "Be able to name the differences between Python lists and numpy arrays."
+- "Write a function for calculating the angle between two points"
+- "Write a function which finds all bonds in a molecule."
+- "Use values from a known source (QCArchive) to verify that function works correctly"
 keypoints:
 - ""
 ---
+
+For this lesson, we will extend the Geometry Analysis project which you completed as part of the pre-summer school workshop. We will write functions to calculate and store bonds in a molecule, and angles based on those bonds. Results will be verified using a known data set from QCArchive.
 
 ## Using QCArchive
 
