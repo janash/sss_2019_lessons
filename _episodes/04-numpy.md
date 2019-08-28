@@ -319,14 +319,18 @@ print(distances)
 > ## Exercise
 > Can you think of a way to create 10 evenly spaced points which go from (0, 0, 0) to (10, 10 , 10) using NumPy?
 >> ## Answer
->> This is one solution, though there may be others.
+>> These are two solutions, though there may be others.
 >> ~~~
 >> # Create an array of zeros of the desired size.
 >> fill_array = np.zeros([10, 3])
 >>
+>> dim = np.linspace(0, 10, num=10)
+>>
 >> fill_array[:,0] = dim
 >> fill_array[:,1] = dim
 >> fill_array[:,2] = dim
+>> # or, you could have called linspace in the following way
+>> second_method = np.linspace((0,0,0), (10,10,10), num=10)
 >> ~~~
 >> {: .language-python}
 > {: .solution}
