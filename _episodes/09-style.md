@@ -231,7 +231,7 @@ $ git push origin master
 
 Edit your code to have docstrings describing the functions.
 
-
+~~~
 """
 molecule.py
 A python package for the MolSSI Software Summer School.
